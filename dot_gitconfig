@@ -1,0 +1,20 @@
+[alias]
+  cl = clone
+  cm = commit
+  co = checkout
+  df = diff
+  ds = diff --staged
+  gr = grep
+  lg = log
+  ll = log --abbrev-commit --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+  ls = log --format=fuller --show-signature
+  st = status --short
+
+[init]
+  defaultBranch = main
+
+[pull]
+  rebase = true
+
+[push]
+  default = current
