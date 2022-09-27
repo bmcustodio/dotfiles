@@ -1,14 +1,22 @@
 require("telescope").setup {
   defaults = {
+    file_ignore_patterns = {
+      ".git/*",
+      "**/.terraform/*",
+      ".terraform.lock*",
+      "*.tfstate",
+      "*.tfstate.*",
+      ".vscode/*",
+    },
     vimgrep_arguments = {
       "rg",
       "--color=never",
       "--column",
       "--glob=!.git/*",
       "--glob=!**/.terraform/*",
-      "--glob=!.terraform.lock.hcl",
-      "--glob=!.terraform.tfstate*",
-      "--glob=!terraform.tfstate*",
+      "--glob=!.terraform.lock*",
+      "--glob=!*.tfstate",
+      "--glob=!*.tfstate.*",
       "--glob=!.vscode/*",
       "--hidden",
       "--line-number",
