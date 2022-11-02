@@ -1,5 +1,5 @@
 require("onedark").setup {
-  style = "darker",
+  style = "dark",
   toggle_style_list = {
     "dark",
     "darker",
