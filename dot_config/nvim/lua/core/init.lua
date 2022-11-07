@@ -6,6 +6,7 @@ vim.keymap.set("n", "<C-c>", '"+yy', opts)
 vim.opt.autoindent = true -- Enable auto-indent.
 vim.opt.backspace = "indent,eol,start" -- Tweak backspace's behavior.
 vim.opt.clipboard = "unnamedplus" -- Use "unnamedplus".
+vim.opt.cmdheight = 0 -- Don't show the cmdline by default.
 vim.opt.completeopt = { "menu", "menuone", "noselect" } -- Set completion options.
 vim.opt.expandtab = true -- Use spaces instead of tabs.
 vim.opt.gdefault = true -- Always substitute all matches in a line.
