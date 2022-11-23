@@ -7,6 +7,12 @@ require("packer").startup(function(use)
     requires = "kyazdani42/nvim-web-devicons",
   }
   use {
+    "christoomey/vim-tmux-navigator",
+    config = function()
+      require "plugins.configs.vim-tmux-navigator"
+    end,
+  }
+  use {
     "ckipp01/stylua-nvim",
     run = "cargo install stylua",
   }

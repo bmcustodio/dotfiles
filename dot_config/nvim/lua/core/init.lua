@@ -2,6 +2,16 @@
 vim.keymap.set("v", "<C-c>", '"+y', opts)
 vim.keymap.set("n", "<C-c>", '"+yy', opts)
 
+-- Set mappings for easier navigation in wrapped lines.
+vim.keymap.set("n", "j", "gj", opts)
+vim.keymap.set("n", "k", "gk", opts)
+vim.keymap.set("n", "gj", "j", opts)
+vim.keymap.set("n", "gk", "k", opts)
+vim.keymap.set("n", "<up>", "g<up>", opts)
+vim.keymap.set("n", "<down>", "g<down>", opts)
+vim.keymap.set("n", "g<up>", "<up>", opts)
+vim.keymap.set("n", "g<down>", "<down>", opts)
+
 -- Configure core options.
 vim.opt.autoindent = true -- Enable auto-indent.
 vim.opt.backspace = "indent,eol,start" -- Tweak backspace's behavior.
