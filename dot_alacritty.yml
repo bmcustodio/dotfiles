@@ -22,14 +22,18 @@ colors:
     yellow:  "0xd19a66"
 font:
   bold:
-    family: CaskaydiaCove Nerd Font Mono
+    family: Caskaydia Cove Nerd Font Mono
+    style: Bold
   bold_italic:
-    family: CaskaydiaCove Nerd Font Mono
+    family: Caskaydia Cove Nerd Font Mono
     style: Bold Italic
   italic:
-    family: CaskaydiaCove Nerd Font Mono
+    family: Caskaydia Cove Nerd Font Mono
+    style: Italic
   normal:
-    family: CaskaydiaCove Nerd Font Mono
+    family: Caskaydia Cove Nerd Font Mono
+  offset:
+    y: 0
   size: 14
 key_bindings:
   - { key: Left,     mods: Alt,     chars: "\x1bb"                       } # Skip word left
@@ -40,4 +44,4 @@ selection:
   save_to_clipboard: true
 window:
   opacity: 0.9
-  startup_mode: SimpleFullscreen 
+  startup_mode: Fullscreen

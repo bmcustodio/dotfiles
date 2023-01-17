@@ -17,6 +17,9 @@ require("packer").startup(function(use)
     run = "cargo install stylua",
   }
   use {
+    "dylanaraps/wal.vim",
+  }
+  use {
     "fatih/vim-go",
     run = ":GoUpdateBinaries",
   }
@@ -55,12 +58,6 @@ require("packer").startup(function(use)
     "hrsh7th/vim-vsnip",
   }
   use {
-    "navarasu/onedark.nvim",
-    config = function()
-      require "plugins.configs.onedark"
-    end,
-  }
-  use {
     "kyazdani42/nvim-tree.lua",
     config = function()
       require "plugins.configs.nvim-tree"
@@ -95,7 +92,7 @@ require("packer").startup(function(use)
       { "sharkdp/fd" },
       {
         "nvim-telescope/telescope-fzf-native.nvim",
-        run = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+        run = "make",
       },
     },
   }

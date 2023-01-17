@@ -42,6 +42,10 @@ vim.opt.termguicolors = true -- Enable 24-bit RGB colors.
 vim.opt.undolevels = 1000 -- Number of undo levels.
 vim.opt.visualbell = true -- Use the visual bell.
 
+-- Use pywal's color scheme.
+vim.opt.termguicolors = false -- Required by 'wal.vim'.
+vim.cmd("colorscheme wal")
+
 -- Don't auto-comment new lines.
 vim.api.nvim_create_autocmd("BufEnter", {
   command = "set fo-=c fo-=r fo-=o",

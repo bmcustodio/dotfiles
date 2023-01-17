@@ -44,17 +44,23 @@ export PATH="${HOME}/Library/Python/3.9/bin:${PATH}"
 export PATH="/usr/local/bin:${PATH}"
 
 # Setup some aliases.
+alias diff="diff --color=auto"
 alias gcl="git clone"
 alias gcm="(git checkout master > /dev/null 2>&1 || git checkout main > /dev/null 2>&1) && git pull --autostash --rebase"
 alias gfo="git fetch origin"
 alias gst="git status"
+alias ip="ip --color=auto"
 alias kc="kubectl config current-context"
 alias kks="kubectl -n kube-system"
 alias kns="kubectl delete pod netshoot --ignore-not-found && kubectl run --restart=Never -it --image nicolaka/netshoot netshoot -- /bin/sh"
-alias ll="ls -lah"
-alias ls="ls -lah"
+alias ll="ls --all --color=auto --human-readable -l"
+alias ls="ls --color=auto"
 alias rg="rg --column --glob '!.terraform/*' --glob '!.git/*' --hidden --line-number --no-heading --no-ignore --smart-case --with-filename"
 alias v="nvim"
 alias vim="nvim"
 alias watch="watch -c "
 alias x="nvim ."
+
+# Setup pywal.
+cat $HOME/.cache/wal/sequences
+source $HOME/.cache/wal/colors-tty.sh
