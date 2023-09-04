@@ -1,6 +1,5 @@
 local icons = require "nvim-web-devicons"
 require("nvim-tree").setup {
-  create_in_closed_folder = true,
   diagnostics = {
     enable = true,
   },
@@ -29,12 +28,6 @@ require("nvim-tree").setup {
   },
   view = {
     adaptive_size = true,
-    mappings = {
-      list = { {
-        action = "dir_up",
-        key = "u",
-      } },
-    },
     side = "left",
   },
 }
