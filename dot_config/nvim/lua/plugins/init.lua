@@ -1,5 +1,11 @@
 require("packer").startup(function(use)
   use {
+    "arcticicestudio/nord-vim",
+    config = function()
+      require "plugins.configs.nord-vim"
+    end,
+  }
+  use {
     "bmcustodio/bufferline.nvim",
     config = function()
       require "plugins.configs.bufferline"
@@ -53,12 +59,6 @@ require("packer").startup(function(use)
   }
   use {
     "hrsh7th/vim-vsnip",
-  }
-  use {
-    "navarasu/onedark.nvim",
-    config = function()
-      require "plugins.configs.onedark"
-    end,
   }
   use {
     "kyazdani42/nvim-tree.lua",

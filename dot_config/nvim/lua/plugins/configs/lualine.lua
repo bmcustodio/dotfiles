@@ -4,6 +4,6 @@ require("lualine").setup {
       "NvimTree",
       "packer",
     },
-    theme = "onedark",
+    theme = "nord",
   },
 }
