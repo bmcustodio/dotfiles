@@ -1,0 +1,84 @@
+# General
+
+set -g default-shell {{ lookPath "zsh" }}
+set -g base-index 1
+set -g pane-base-index 1
+set -g default-terminal "tmux-256color"
+set -sg escape-time 10
+set -g focus-events on
+set -g history-limit 50000
+set -g mouse on
+set -g renumber-windows on
+set -sa terminal-overrides ",*:Tc"
+
+# Prefix
+
+set -g prefix C-a
+bind C-a send-prefix
+
+# Pane borders
+
+set -g pane-border-lines heavy
+
+# Copy mode
+
+setw -g mode-keys vi
+bind -T copy-mode-vi v send-keys -X begin-selection
+bind -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+bind -T copy-mode-vi r send-keys -X rectangle-toggle
+
+# Key bindings
+
+## Toggle synchronize-panes
+bind a setw synchronize-panes
+
+## vim-style navigation
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# Nested-session passthrough
+
+bind -T root F12 {
+    set prefix None
+    set key-table off
+    set status-style "fg=#6c7086,bg=#313244"
+    refresh-client -S
+}
+bind -T off F12 {
+    set -u prefix
+    set -u key-table
+    set -u status-style
+    refresh-client -S
+}
+
+# Plugins
+
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+
+set -g @plugin 'catppuccin/tmux'
+set -g @catppuccin_flavor 'mocha'
+set -g @catppuccin_window_status_style "rounded"
+
+set -g @plugin 'omerxx/tmux-sessionx'
+set -g @sessionx-fzf-builtin-tmux 'on'
+set -g @sessionx-layout 'reverse'
+set -g @sessionx-preview-enabled 'false'
+set -g @sessionx-tree-mode 'on'
+set -g @sessionx-window-height '50%'
+set -g @sessionx-window-width '50%'
+set -g @sessionx-zoxide-mode 'on'
+
+# Status bar
+
+set -g status-left-length 100
+set -g status-right-length 100
+set -g status-left "#{E:@catppuccin_status_session}"
+set -g status-right ""
+set -ag status-right "#{E:@catppuccin_status_application}"
+set -ag status-right "#{E:@catppuccin_status_directory}"
+set -ag status-right "#{E:@catppuccin_status_date_time}"
+
+run '~/.tmux/plugins/tpm/tpm'

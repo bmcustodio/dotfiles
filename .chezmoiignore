@@ -1,0 +1,13 @@
+.claude/
+.github/
+.gitignore
+.opencode/
+AGENTS.md
+LICENSE
+README.md
+openspec/
+
+# OS-conditional ignores
+{{ if ne .chezmoi.os "darwin" }}
+.config/alacritty/
+{{ end }}

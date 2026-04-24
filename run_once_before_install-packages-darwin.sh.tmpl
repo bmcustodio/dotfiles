@@ -1,0 +1,14 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+
+set -euo pipefail
+
+# Install Homebrew
+if ! command -v /opt/homebrew/bin/brew &>/dev/null; then
+  arch -arm64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Core CLI tools
+arch -arm64 /opt/homebrew/bin/brew install atuin bat btop chezmoi direnv eza fd fzf git neovim ripgrep starship tmux zoxide
+{{ end -}}

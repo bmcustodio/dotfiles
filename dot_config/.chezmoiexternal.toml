@@ -1,0 +1,5 @@
+["fsh"]
+    type = "archive"
+    url = "https://github.com/catppuccin/zsh-fsh/archive/refs/heads/main.tar.gz"
+    stripComponents = 2
+    include = ["zsh-fsh-main/themes/**"]

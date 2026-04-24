@@ -1,0 +1,41 @@
+[alias]
+  cl = clone
+  cm = commit
+  co = checkout
+  df = diff
+  ds = diff --staged
+  gr = grep
+  lg = log
+  ll = log --graph --format='%C(auto)%h%d %s %C(dim)%an, %ar'
+  ls = log --format=fuller --show-signature
+  st = status --short
+
+[core]
+  pager = bat --plain --theme='Catppuccin Mocha'
+
+[init]
+  defaultBranch = main
+
+[pull]
+  rebase = true
+
+[push]
+  default = current
+
+[user]
+  email = {{ .email }}
+  name = {{ .name }}
+{{ if ne .signing_key "" -}}
+  signingkey = {{ .signing_key }}
+{{ end -}}
+
+{{ if ne .signing_key "" -}}
+[commit]
+  gpgsign = true
+
+[gpg]
+  format = ssh
+
+[tag]
+  gpgsign = true
+{{ end -}}

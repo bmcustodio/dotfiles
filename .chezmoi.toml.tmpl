@@ -1,0 +1,10 @@
+{{- $name := promptStringOnce . "name" "Your full name" -}}
+{{- $email := promptStringOnce . "email" "Your email address" -}}
+{{- $signingKey := promptStringOnce . "signing_key" "Path to SSH signing key (empty for none)" -}}
+{{- $profile := promptChoiceOnce . "profile" "Profile" (list "full" "core") -}}
+
+[data]
+  email = {{ $email | quote }}
+  name = {{ $name | quote }}
+  profile = {{ $profile | quote }}
+  signing_key = {{ $signingKey | quote }}

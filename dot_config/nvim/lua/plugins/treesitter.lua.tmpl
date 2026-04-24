@@ -1,0 +1,7 @@
+{{ if eq .profile "core" -}}
+return {
+    { "nvim-treesitter/nvim-treesitter", enabled = false },
+}
+{{- else -}}
+return {}
+{{- end }}

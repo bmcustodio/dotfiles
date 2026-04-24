@@ -1,0 +1,5 @@
+["themes"]
+    type = "archive"
+    url = "https://github.com/catppuccin/atuin/archive/refs/heads/main.tar.gz"
+    stripComponents = 3
+    include = ["atuin-main/themes/mocha/**"]
