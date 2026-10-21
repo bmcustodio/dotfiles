@@ -1,0 +1,28 @@
+{{- $profile := dig "profile" "" . -}}
+{{- $dev := dig "dev" (and (ne $profile "") (ne $profile "core")) . -}}
+inline_height = 0
+invert = true
+{{ if $dev -}}
+search_mode = "daemon-fuzzy"
+{{ else -}}
+search_mode = "fuzzy"
+{{ end -}}
+search_mode_shell_up_key_binding = "prefix"
+show_help = false
+show_tabs = false
+style = "full"
+update_check = false
+
+[daemon]
+{{ if $dev -}}
+enabled = true
+autostart = true
+{{ else -}}
+enabled = false
+autostart = false
+{{ end -}}
+[theme]
+name = "catppuccin-mocha-lavender"
+
+[ui]
+columns = ["datetime", "command"]

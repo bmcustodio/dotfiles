@@ -1,0 +1,25 @@
+{{- $profile := dig "profile" "" . -}}
+{{- $dev := dig "dev" (and (ne $profile "") (ne $profile "core")) . -}}
+{{- $gui := dig "gui" (eq $profile "full") . -}}
+.claude/
+.opencode/
+.gitignore
+AGENTS.md
+CLAUDE.md
+LICENSE
+README.md
+openspec/
+
+# Only deploy Alacritty and its theme on GUI machines.
+{{ if not $gui }}
+.config/alacritty/
+{{ end }}
+
+# Editor config differs by development capability:
+# * dev → LazyVim tree under .config/nvim/lua/ (~/.vimrc is not deployed).
+# * non-dev → minimal ~/.vimrc, sourced by both Vim and Neovim (LazyVim tree skipped).
+{{ if $dev }}
+.vimrc
+{{ else }}
+.config/nvim/lua/
+{{ end }}
