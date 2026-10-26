@@ -1,0 +1,19 @@
+{{- if eq .chezmoi.os "linux" }}
+{{- $osr := .chezmoi.osRelease }}
+{{- $id := dig "id" "" $osr }}
+{{- $idLike := dig "idLike" "" $osr }}
+{{- $isArch := or (eq $id "arch") (contains "arch" $idLike) }}
+{{- if $isArch -}}
+{{- $profile := dig "profile" "" . -}}
+{{- $dev := dig "dev" (and (ne $profile "") (ne $profile "core")) . -}}
+{{- if $dev -}}
+#!/bin/sh
+# Prune podman images unused for a week, weekly. Re-run when the units change.
+# podman-prune.service hash: {{ include "dot_config/systemd/user/podman-prune.service" | sha256sum }}
+# podman-prune.timer hash: {{ include "dot_config/systemd/user/podman-prune.timer" | sha256sum }}
+set -eu
+systemctl --user daemon-reload
+systemctl --user enable --now podman-prune.timer
+{{- end -}}
+{{- end -}}
+{{- end -}}

@@ -1,0 +1,14 @@
+{{- $profile := dig "profile" "" . -}}
+{{- $dev := dig "dev" (and (ne $profile "") (ne $profile "core")) . -}}
+{{ if $dev -}}
+require("config.lazy")
+{{ else -}}
+-- Non-development machines: no plugin manager, no nvim-treesitter (and
+-- therefore no C toolchain required). Syntax highlighting comes from Neovim's
+-- built-in regex engine. Settings are shared with ~/.vimrc so that Neovim
+-- and plain Vim behave identically.
+local vimrc = vim.fn.expand("~/.vimrc")
+if vim.fn.filereadable(vimrc) == 1 then
+  vim.cmd("source " .. vimrc)
+end
+{{ end }}

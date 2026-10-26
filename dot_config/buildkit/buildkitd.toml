@@ -1,0 +1,8 @@
+[worker.containerd]
+  enabled = false
+
+[worker.oci]
+  gc = true
+  max-parallelism = 4
+  maxUsedSpace = "32GB"
+  minFreeSpace = "8GB"

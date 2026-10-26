@@ -1,0 +1,27 @@
+{{- $name := promptStringOnce . "name" "Your full name" -}}
+{{- $email := promptStringOnce . "email" "Your email address" -}}
+{{- $signingKey := promptStringOnce . "signing_key" "Path to SSH signing key (empty for none)" -}}
+{{- $profile := dig "profile" "" . -}}
+{{- $dev := false -}}
+{{- $gui := false -}}
+{{- if hasKey . "dev" -}}
+  {{- $dev = .dev -}}
+{{- else if ne $profile "" -}}
+  {{- $dev = ne $profile "core" -}}
+{{- else -}}
+  {{- $dev = promptBoolOnce . "dev" "Enable the development toolchain (mise, LazyVim, Kubernetes, containers)?" -}}
+{{- end -}}
+{{- if hasKey . "gui" -}}
+  {{- $gui = .gui -}}
+{{- else if ne $profile "" -}}
+  {{- $gui = eq $profile "full" -}}
+{{- else -}}
+  {{- $gui = promptBoolOnce . "gui" "Enable the GUI layer (Alacritty, VS Code, Nerd Font)?" -}}
+{{- end -}}
+
+[data]
+  dev = {{ $dev }}
+  email = {{ $email | quote }}
+  gui = {{ $gui }}
+  name = {{ $name | quote }}
+  signing_key = {{ $signingKey | quote }}

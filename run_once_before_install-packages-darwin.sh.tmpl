@@ -1,0 +1,28 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+
+set -euo pipefail
+
+# macOS is always the "full" profile. Homebrew installs the CLI tools, the
+# container stack, and the GUI apps; mise manages language runtimes and
+# versioned tools (node/python/go/rust, opentofu, …).
+
+# Install Homebrew
+if ! command -v /opt/homebrew/bin/brew &>/dev/null; then
+  arch -arm64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# CLI tools + the container stack + mise itself.
+arch -arm64 /opt/homebrew/bin/brew install \
+  atuin bat btop chezmoi eza fd fzf git jq k9s kubernetes-cli mise neovim \
+  podman ripgrep skopeo starship tmux watchexec yq zoxide
+
+# GUI apps
+arch -arm64 /opt/homebrew/bin/brew install --cask alacritty visual-studio-code
+
+# Language runtimes + versioned tools via mise.
+# `mise use -g` pins each in the global config (~/.config/mise/config.toml)
+# and installs it; MISE_YES keeps it unattended.
+MISE_YES=1 mise use -g go@latest node@latest python@latest rust@latest tofu@latest
+{{ end -}}

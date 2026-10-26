@@ -1,0 +1,19 @@
+{{- if eq .chezmoi.os "linux" }}
+{{- $osr := .chezmoi.osRelease }}
+{{- $id := dig "id" "" $osr }}
+{{- $idLike := dig "idLike" "" $osr }}
+{{- $isArch := or (eq $id "arch") (contains "arch" $idLike) }}
+{{- if $isArch -}}
+{{- $profile := dig "profile" "" . -}}
+{{- $dev := dig "dev" (and (ne $profile "") (ne $profile "core")) . -}}
+{{- if $dev -}}
+#!/bin/sh
+# Start rootless buildkitd on first use of its socket, and restart it when
+# buildkitd.toml changes.
+# buildkitd.toml hash: {{ include "dot_config/buildkit/buildkitd.toml" | sha256sum }}
+set -eu
+systemctl --user enable --now buildkit-proxy.socket
+systemctl --user try-restart buildkit.service
+{{- end -}}
+{{- end -}}
+{{- end -}}

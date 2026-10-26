@@ -1,0 +1,67 @@
+[general]
+import = [
+  "~/.config/alacritty/catppuccin-mocha.toml"
+]
+
+[font]
+size = 15
+
+[font.bold]
+family = "CodeNewRoman Nerd Font"
+style = "Bold"
+
+[font.bold_italic]
+family = "CodeNewRoman Nerd Font"
+style = "Bold Italic"
+
+[font.italic]
+family = "CodeNewRoman Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "CodeNewRoman Nerd Font"
+
+# Word-wise navigation (Alt+Left/Right). Portable across platforms.
+[[keyboard.bindings]]
+chars = "\u001Bb"
+key = "Left"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001Bf"
+key = "Right"
+mods = "Alt"
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001B\r"
+{{ if eq .chezmoi.os "darwin" }}
+# macOS-only: Command+Left/Right jump to line start/end.
+[[keyboard.bindings]]
+chars = "\u001BOH"
+key = "Left"
+mode = "AppCursor"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u001BOF"
+key = "Right"
+mode = "AppCursor"
+mods = "Command"
+{{ end }}
+[selection]
+save_to_clipboard = true
+
+[window]
+opacity = 0.8
+{{ if eq .chezmoi.os "darwin" -}}
+decorations = "Buttonless"
+option_as_alt = "Both"
+startup_mode = "SimpleFullscreen"
+{{- else -}}
+decorations = "None"
+dynamic_padding = true
+padding = { x = 0, y = 0 }
+startup_mode = "Windowed"
+{{- end }}

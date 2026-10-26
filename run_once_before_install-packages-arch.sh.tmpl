@@ -1,0 +1,49 @@
+{{- if eq .chezmoi.os "linux" }}
+{{- $osr := .chezmoi.osRelease }}
+{{- $id := dig "id" "" $osr }}
+{{- $idLike := dig "idLike" "" $osr }}
+{{- $isArch := or (eq $id "arch") (contains "arch" $idLike) }}
+{{- if $isArch -}}
+{{- $profile := dig "profile" "" . -}}
+{{- $dev := dig "dev" (and (ne $profile "") (ne $profile "core")) . -}}
+{{- $gui := dig "gui" (eq $profile "full") . -}}
+#!/bin/bash
+
+set -euo pipefail
+
+# Arch Linux: pacman for official packages, yay for the AUR, no Homebrew.
+# dev gates mise, Kubernetes, containers, and the C toolchain.
+# gui gates Alacritty, the Nerd Font, and VS Code.
+
+# Bootstrap yay from the AUR when it is missing.
+if ! command -v yay &>/dev/null; then
+  sudo pacman -S --needed --noconfirm base-devel git
+  tmpdir=$(mktemp -d)
+  git clone https://aur.archlinux.org/yay.git "$tmpdir/yay"
+  (cd "$tmpdir/yay" && makepkg -si --noconfirm)
+  rm -rf "$tmpdir"
+fi
+
+# Replace the Python yq with go-yq, which matches the macOS yq semantics.
+if pacman -Q yq &>/dev/null; then
+  sudo pacman -Rns --noconfirm yq
+fi
+
+# Base packages.
+sudo pacman -S --needed --noconfirm \
+  atuin bat btop ca-certificates chezmoi curl eza fd fzf git go-yq jq \
+  neovim ripgrep starship tmux zoxide zsh
+
+{{ if $dev }}
+# Development layer.
+sudo pacman -S --needed --noconfirm \
+  buildkit gcc k9s kubectl make mise podman rootlesskit skopeo slirp4netns \
+  watchexec
+{{ end }}
+{{ if $gui }}
+# GUI layer.
+sudo pacman -S --needed --noconfirm alacritty otf-codenewroman-nerd
+yay -S --needed --noconfirm visual-studio-code-bin
+{{ end }}
+{{ end -}}
+{{- end -}}

@@ -1,0 +1,9 @@
+{{- $profile := dig "profile" "" . -}}
+{{- $dev := dig "dev" (and (ne $profile "") (ne $profile "core")) . -}}
+{{- if $dev -}}
+#!/bin/sh
+# .chezmoiignore stops managing ~/.vimrc on dev machines but does not delete a
+# previously deployed copy. Remove it when the capability changes to dev=true;
+# switching back to dev=false redeploys dot_vimrc.
+rm -f "$HOME/.vimrc"
+{{- end -}}

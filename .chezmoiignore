@@ -1,0 +1,37 @@
+{{- $profile := dig "profile" "" . -}}
+{{- $dev := dig "dev" (and (ne $profile "") (ne $profile "core")) . -}}
+{{- $gui := dig "gui" (eq $profile "full") . -}}
+.claude/
+.opencode/
+.gitignore
+AGENTS.md
+CLAUDE.md
+LICENSE
+README.md
+openspec/
+
+# Only deploy Alacritty and its theme on GUI machines.
+{{ if not $gui }}
+.config/alacritty/
+{{ end }}
+
+# Editor config differs by development capability:
+# * dev → LazyVim tree under .config/nvim/lua/ (~/.vimrc is not deployed).
+# * non-dev → minimal ~/.vimrc, sourced by both Vim and Neovim (LazyVim tree skipped).
+{{ if $dev }}
+.vimrc
+{{ else }}
+.config/nvim/lua/
+{{ end }}
+
+# Rootless BuildKit and podman (with its weekly prune timer) are only installed
+# on Arch dev machines.
+{{ $isArch := false }}
+{{ if eq .chezmoi.os "linux" }}
+{{ $osr := .chezmoi.osRelease }}
+{{ $isArch = or (eq (dig "id" "" $osr) "arch") (contains "arch" (dig "idLike" "" $osr)) }}
+{{ end }}
+{{ if not (and $dev $isArch) }}
+.config/buildkit/
+.config/systemd/user/podman-prune.*
+{{ end }}

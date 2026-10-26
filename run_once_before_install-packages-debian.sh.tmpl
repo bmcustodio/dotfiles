@@ -1,0 +1,28 @@
+{{- if eq .chezmoi.os "linux" }}
+{{- $osr := .chezmoi.osRelease }}
+{{- $id := dig "id" "" $osr }}
+{{- $idLike := dig "idLike" "" $osr }}
+{{- $isDebian := or (eq $id "debian") (eq $id "ubuntu") (contains "debian" $idLike) }}
+{{- if $isDebian -}}
+#!/bin/bash
+
+set -euo pipefail
+
+# Debian/Ubuntu: apt installs the base prerequisites, and Homebrew installs the
+# CLI tool set. The retained Debian target is Proxmox (dev=false, gui=false),
+# so no development or GUI packages are installed here.
+
+sudo apt-get -y update
+sudo apt-get install -y ca-certificates curl zsh
+
+# Homebrew
+if [ ! -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# CLI tools.
+brew install \
+  atuin bat btop chezmoi eza fd fzf git jq neovim ripgrep starship tmux yq zoxide
+{{ end -}}
+{{- end -}}
